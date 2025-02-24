@@ -14,20 +14,19 @@ class WeatherHome extends StatefulWidget {
 class _WeatherHomeState extends State<WeatherHome> {
   late WeatherData weatherInfo;
   bool isLoading = false;
-  double ? longitude = 000;// 90.3877;
-  double ? latitude = 0.00;//23.9905;
-  myWeather() {
-    isLoading = false;
+  late double longitude; // 90.3877;
+  late double latitude; //23.9905;
+  setmyWeather() {
+    //isLoading = false;
     WeatherServices().fetchWeather(longitude, latitude).then((value) {
       setState(() {
-        
         weatherInfo = value;
         isLoading = true;
       });
     });
   }
 
-Future<void> _getCurrentLocation() async {
+  Future<void> _getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -44,19 +43,16 @@ Future<void> _getCurrentLocation() async {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, handle appropriately
         print('Location permissions are denied.');
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are permanently denied
       print('Location permissions are permanently denied.');
       return;
     }
 
-    // Get the current location
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
@@ -64,7 +60,9 @@ Future<void> _getCurrentLocation() async {
       latitude = position.latitude;
       longitude = position.longitude;
     });
-}
+    setmyWeather();
+  }
+
   @override
   void initState() {
     weatherInfo = WeatherData(
@@ -79,11 +77,8 @@ Future<void> _getCurrentLocation() async {
       weather: [],
     );
     _getCurrentLocation();
-    myWeather();
     super.initState();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +99,9 @@ Future<void> _getCurrentLocation() async {
                       formattedDate: formattedDate,
                       formattedTime: formattedTime,
                     )
-                  : const CircularProgressIndicator(color: Colors.white,),
+                  : const CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
             ),
           ],
         ),

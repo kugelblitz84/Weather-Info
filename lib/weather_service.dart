@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:weather_app1/models/weather_models.dart';
 
 class WeatherServices {
-
   fetchWeather(double? longitude, double? latitude) async {
     final response = await http.get(
       Uri.parse(
@@ -23,7 +22,6 @@ class WeatherServices {
       print(e.toString());
     }
   }
-  
 }
 
 
