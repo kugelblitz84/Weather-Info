@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:weather_app1/pages/weatherpage.dart';
 import 'package:get/get.dart';
 
-
-class myclass{
+class myclass {
   late int _n;
   String _s;
 
   myclass(this._n, this._s);
 
-  myclass.named(this._s){
+  myclass.named(this._s) {
     int _n = 99;
   }
 
-  void prnt(){
+  void prnt() {
     print('$_n $_s');
   }
 }
+
 void main() {
   //myclass cls = myclass.named('5');
   //cls.prnt();
@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: WeatherHome(),
